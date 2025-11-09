@@ -1,0 +1,42 @@
+# Gemini Forex Autopilot configuration
+general:
+  account_currency: USD
+  symbols:
+    - EURUSD
+    - GBPUSD
+    - USDJPY
+    - XAUUSD
+  timeframes:
+    - M15
+    - H1
+  poll_interval_seconds: 60
+  heartbeat_interval_seconds: 15
+
+risk:
+  risk_per_trade: 0.01      # 1% of equity
+  max_concurrent_trades: 3
+  max_daily_drawdown: 0.03  # 3%
+  stop_loss_atr_multiplier: 1.8
+  take_profit_multiple: 2.4
+
+mt5:
+  terminal_path: "G:\\Program Files\\terminal64\\terminal64.exe"
+  server: "YourBroker-Server"
+  login: 1234567
+  password: "MetaTraderPassword"
+  timezone_offset_minutes: 0
+
+gemini:
+  model: "gemini-1.5-pro"
+  prompt_template: |
+    You are an institutional-grade FX strategist. Analyse the provided market context and propose either:
+    - BUY
+    - SELL
+    - FLAT (no trade)
+
+    Return JSON with:
+      decision: string (BUY, SELL, FLAT)
+      confidence: float 0-1
+      stop_loss_pips: float
+      take_profit_pips: float
+      rationale: brief text summary
